@@ -1,44 +1,24 @@
 import pygame
 import sys
+from config import *
+import Point
 
-FPS = 60
-WIN_WIDTH = 960
-WIN_HEIGHT = 960
-WHITE = (255, 255, 255)
-BLACK = (0,0,0)
 clock = pygame.time.Clock()
-LINEAR_SPEED = 20
 sc = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 isRunning = True
 
-class Point(object):
-    def __init__(self, x, y, velocity, center, connectedPoint, color,radius):
-        self.x = x
-        self.y = y
-        self.velocity = velocity
-        self.center = center
-        self.connectedPoint = connectedPoint
-        self.color = color
-        self.radius = radius
 
-    def move(self, deltaTime):
-        pass
-
-    def draw(self):
-        pygame.draw.circle(sc, WHITE,(self.x,self.y),self.radius)
-        pygame.draw.aaline(sc, WHITE, (self.x, self.y), (connectedPoint.x, connectedPoint.y))
-
-
-
-
-def pointsFabric(count, r, center):
+def pointsFabric(count, center, r):
     points = []
-    points.append(Point(center[0]+r/count, center[1], ))
-    for i in range(1, count+1):
+    step = r / count
+    x0, y0 = center[0], center[1]
+    points.append(Point(x0 + step, y0, ))
+    for i in range(2, count + 1):
         points.append(Point(x, y, ))
+    return points
 
 
-
+points = pointsFabric(POINTS_COUNT, (WIN_HEIGHT // 2, WIN_HEIGHT // 2), RADIUS)
 while isRunning:
     for i in pygame.event.get():
         if i.type == pygame.QUIT:
